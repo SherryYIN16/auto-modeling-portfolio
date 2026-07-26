@@ -1,2 +1,4 @@
 *.pkl
 *.csv
+.gitignore/models/
+.gitignore/backend/backend/data/
