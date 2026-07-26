@@ -1,0 +1,7 @@
+﻿fastapi
+uvicorn
+pandas
+python-multipart
+lightgbm
+xgboost
+scikit-learn

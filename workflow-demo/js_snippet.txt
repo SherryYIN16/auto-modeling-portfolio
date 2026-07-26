@@ -1,0 +1,23 @@
+﻿        // 处理文件上传并更新下拉框
+        document.getElementById('file-upload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/upload', { method: 'POST', body: formData });
+                const data = await response.json();
+                
+                const select = document.getElementById('target-var');
+                select.innerHTML = '<option value="">-- 请选择变量 --</option>';
+                data.columns.forEach(col => {
+                    select.innerHTML += \<option value="\">\</option>\;
+                });
+            } catch (err) {
+                alert('后端服务连接失败，请确保后端已启动！');
+            }
+        });
+
+        // 导出功能
