@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>企业级自动化建模工作台</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>        input[type=range] { -webkit-appearance: none; background: transparent; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; }
+    <style>input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; background: transparent; border-radius: 4px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: #2563eb; cursor: pointer; margin-top: -4px; }
-        #split-ratio { background: linear-gradient(to right, #2563eb 80%, #e5e7eb 80%); }
+        #split-ratio { height: 8px; border-radius: 4px; background: linear-gradient(to right, #2563eb 80%, #e5e7eb 80%); }
         @keyframes breathing { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
         .breathing-bar { animation: breathing 2s infinite ease-in-out; }
     </style>
@@ -22,7 +22,6 @@
 
         <div class="bg-white shadow rounded-lg p-6">
             <!-- 阶段1: 配置 -->
-                        <!-- 阶段1: 配置 -->
             <div id="setup-view">
                 <h2 class="text-xl font-semibold mb-6 border-b pb-2">1. 启动配置</h2>
                 <div class="grid grid-cols-2 gap-8">
@@ -30,7 +29,7 @@
                         <label class="block text-sm font-medium text-gray-700">上传数据集 (CSV/TXT)</label>
                         <input type="file" id="file-upload" class="w-full p-2 border rounded">
                         <label class="block text-sm font-medium text-gray-700 mt-4">训练/测试集占比</label>
-                        <input type="range" id="split-ratio" min="50" max="90" value="80" class="w-full h-2 bg-blue-500 rounded-lg appearance-none cursor-pointer">
+                        <input type="range" id="split-ratio" min="50" max="90" value="80" class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200">
                         <span id="split-label" class="text-sm text-gray-600">80%</span>
                     </div>
                     <div class="space-y-4">
@@ -61,7 +60,9 @@
                     <div id="log-content" class="bg-gray-50 text-gray-600 p-4 font-mono text-sm h-48 overflow-y-auto"></div>
                 </div>
                 <button id="view-report-btn" class="hidden mt-6 w-full bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700">查看模型效果</button>
-            </div><!-- 阶段3: 报告 -->
+            </div>
+            
+            <!-- 阶段3: 报告 -->
             <div id="result-view" class="hidden">
                 <h2 class="text-xl font-semibold mb-6 border-b pb-2 text-blue-900">3. 模型分析报告</h2>
                 <div id="report-content" class="grid grid-cols-4 gap-4 mb-8"></div>
@@ -73,7 +74,7 @@
         let uploadedFilePath = '';
         let lastReport = null;
 
-                        const slider = document.getElementById('split-ratio');
+        const slider = document.getElementById('split-ratio');
         slider.style.background = 'linear-gradient(to right, #2563eb 80%, #e5e7eb 80%)';
         slider.oninput = (e) => {
             const val = e.target.value;
@@ -107,7 +108,7 @@
 
         document.getElementById('view-report-btn').onclick = () => renderReport(lastReport);
 
-                                function renderReport(report) {
+        function renderReport(report) {
             document.getElementById('process-view').classList.add('hidden');
             document.getElementById('result-view').classList.remove('hidden');
             
@@ -118,7 +119,6 @@
                 '<div class="bg-blue-50 p-4 rounded shadow-sm text-center"><div class="text-xs text-blue-600">AR值</div><div class="text-2xl font-bold text-blue-900">' + report.ar + '</div></div>' +
                 '<div class="bg-blue-50 p-4 rounded shadow-sm text-center"><div class="text-xs text-blue-600">训练耗时</div><div class="text-2xl font-bold text-blue-900">' + report.training_time + 's</div></div>';
 
-            // 修改特征表格，只保留 变量名 和 IV
             var featureHtml = report.features.map(f => 
                 '<tr class="border-b border-gray-100">' +
                     '<td class="p-3 text-gray-700">' + f.name + '</td>' +
@@ -150,13 +150,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
