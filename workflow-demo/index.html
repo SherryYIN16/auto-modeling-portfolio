@@ -83,7 +83,7 @@
         };
         document.getElementById('start-btn').onclick = async () => {
             const target = document.getElementById('target-var').value;
-            const res = await fetch('http://127.0.0.1:8000/model/start?target=' + target + '&path=' + encodeURIComponent(uploadedFilePath), { method: 'POST' });
+            const res = await fetch('http://127.0.0.1:8001/model/start?target=' + target + '&path=' + encodeURIComponent(uploadedFilePath), { method: 'POST' });
             const data = await res.json();
             document.getElementById('setup-view').classList.add('hidden');
             document.getElementById('process-view').classList.remove('hidden');
@@ -92,10 +92,10 @@
         
         function pollStatus(taskId) {
             const poll = setInterval(async () => {
-                const res = await fetch('http://127.0.0.1:8000/model/status/' + taskId);
+                const res = await fetch('http://127.0.0.1:8001/model/status/' + taskId);
                 const data = await res.json();
                 document.getElementById('p-bar').style.width = data.progress + '%';
-                const logRes = await fetch('http://127.0.0.1:8000/model/logs/' + taskId);
+                const logRes = await fetch('http://127.0.0.1:8001/model/logs/' + taskId);
                 const logData = await logRes.json();
                 document.getElementById('log-content').innerHTML = logData.logs.map(l => '<p>'+l+'</p>').join('');
                 if (data.status === 'completed') { 
@@ -142,7 +142,7 @@
         
         document.getElementById('file-upload').onchange = async (e) => {
             const fd = new FormData(); fd.append('file', e.target.files[0]);
-            const res = await fetch('http://127.0.0.1:8000/upload', { method: 'POST', body: fd });
+            const res = await fetch('http://127.0.0.1:8001/upload', { method: 'POST', body: fd });
             const data = await res.json();
             uploadedFilePath = data.path;
             document.getElementById('target-var').innerHTML = data.columns.map(c => '<option value="'+c+'">'+c+'</option>').join('');
