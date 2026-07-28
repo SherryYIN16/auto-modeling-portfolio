@@ -5,14 +5,23 @@ An enterprise-grade automatic modeling demonstration platform integrating a Fast
 ## 🚀 Project Overview
 This project provides an end-to-end demonstration of data uploading, automated feature engineering, model training (powered by AutoGluon), and comprehensive model evaluation & visualization.
 
+## 📸 Workflow Preview
+
+### 1. Configuration Page
+The entry point for uploading data and configuring model parameters.
+![Setup Configuration](./initial_page1.png)
+
+### 2. Modeling Progress Page
+Real-time monitoring of system logs and the automated modeling pipeline.
+![Modeling Progress](./modeling_page2.png)
+
+### 3. Model Analysis Report
+Comprehensive visualization of model performance and AI-driven insights.
+![Model Analysis](./report_page3.png)
+
 ## 📂 Project Structure
 - /backend: FastAPI service for data processing and model orchestration.
-    - main.py: Backend API entry point.
-    - modeling_manager.py: Workflow controller.
-    - model/: Core modeling logic and configuration.
-    - models/: Persistent storage for trained model artifacts.
-- /workflow-demo: Frontend visualization interface.
-    - index.html: Web interface built with Tailwind CSS.
+- /workflow-demo: Frontend visualization interface (index.html).
 
 ## 🛠 Tech Stack
 - **Backend**: Python 3.11, FastAPI, AutoGluon, pandas
@@ -20,23 +29,14 @@ This project provides an end-to-end demonstration of data uploading, automated f
 
 ## ⚙️ Setup & Execution
 1. **Backend Service**:
-   Navigate to the ackend directory:
    `bash
-   python main.py
+   python backend/main.py
    `
-   (Ensure the API is running on port 8001)
-
 2. **Frontend Service**:
-   From the project root:
    `bash
    python -m http.server 8080
    `
-   Access the demo at: http://localhost:8080/workflow-demo/index.html
-
-## 💡 Workflow
-1. **Configuration**: Upload your CSV dataset and configure the train/test split ratio.
-2. **Modeling**: Monitor real-time system logs and progress bars during the training process.
-3. **Analysis**: View model performance metrics (Accuracy, KS, AR), feature importance (IV ranking), and AI-driven expert insights.
+   Access at: http://localhost:8080/workflow-demo/index.html
 
 ## 📜 License
 MIT

@@ -17,23 +17,23 @@ class ModelingFactory:
         def update_state(step, progress):
             tasks[task_id]["step"] = step
             tasks[task_id]["progress"] = progress
-            logger(f"[{step}] 进度: {progress}%")
+            logger(f"[{step}] Progress: {progress}%")
 
-        logger(f"开始建模流程: {data_path}, 目标: {target_col}")
+        logger(f"Starting modeling pipeline: {data_path}, Target: {target_col}")
         
-        update_state("数据加载", 10)
+        update_state("Data Loading", 10)
         df = pd.read_csv(data_path)
         df = df.dropna(subset=[target_col])
         
-        update_state("特征工程", 30)
+        update_state("Feature Engineering", 30)
         engineer = FeatureEngineer()
         processed_df = engineer.create_static_features(df)
         
-        update_state("模型训练", 60)
+        update_state("Model Training", 60)
         trainer = ModelTrainer()
         predictor = trainer.train(processed_df, target_col=target_col)
         
-        update_state("模型评估", 90)
+        update_state("Model Evaluation", 90)
         
         end_time = time.time()
         duration = int(end_time - start_time)
@@ -56,8 +56,9 @@ class ModelingFactory:
             "training_time": f"{duration}s",
             "features": features_list,
             "models": top_models,
-            "ai_expert": f"专家解读：\n1. 整体性能：模型在验证集上表现稳健，AUC指标达到{auc_val}，优于行业平均基准线。\n2. 特征贡献：关键业务特征在模型预测中占据主导地位，显示数据质量对模型效果至关重要。\n3. 优化方向：建议未来增加更多外部衍生特征，或对当前Top 3特征进行更细致的分箱调优，以进一步提升KS值。\n4. 业务建议：基于当前模型准确度，可建议部署于准入阶段的初步筛选场景。"
+            "ai_expert": f"AI Expert Insight:\n1. Overall Performance: The model shows robust performance on the validation set with an AUC of {auc_val}, outperforming the industry benchmark.\n2. Feature Contribution: Key business features dominate model predictions, highlighting that data quality is critical to model effectiveness.\n3. Optimization: We recommend adding more external derived features or fine-tuning the binning for current Top 3 features to further improve KS.\n4. Business Recommendation: Based on current accuracy, deployment for preliminary screening in the entry phase is suggested."
         }
         
-        update_state("模型构建完成", 100)
+        update_state("Model Construction Completed", 100)
         return model_result
+
