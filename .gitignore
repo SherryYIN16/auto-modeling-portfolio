@@ -1,5 +1,5 @@
 *.pkl
 *.csv
-.gitignore/models/
-.gitignore/backend/backend/data/
-.gitignore/backend/venv/
+.idea
+**/__pycache__/
+*.py[cod]
