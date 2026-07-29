@@ -4,3 +4,9 @@
 .gitignore/backend/backend/data/
 .gitignore/backend/venv/
 
+__pycache__/
+*.pyc
+
+.idea/
+__
+
