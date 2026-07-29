@@ -4,14 +4,5 @@
 .idea
 **/__pycache__/
 *.py[cod]
-
-.gitignore/models/
-.gitignore/backend/backend/data/
-.gitignore/backend/venv/
-
-__pycache__/
-*.pyc
-
-.idea/
-__
-
+**/.venv
+**/venv
