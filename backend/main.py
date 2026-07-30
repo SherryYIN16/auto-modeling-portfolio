@@ -1,5 +1,6 @@
 ﻿from fastapi import FastAPI, UploadFile, File, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import pandas as pd
 import io
 import uuid
@@ -31,7 +32,7 @@ async def upload_file(file: UploadFile = File(...)):
 @app.post('/model/start')
 async def start_model(target: str, path: str, background_tasks: BackgroundTasks):
     task_id = str(uuid.uuid4())
-    tasks[task_id] = {'status': 'started', 'progress': 0, 'step': '初始化'}
+    tasks[task_id] = {'status': 'started', 'progress': 0, 'step': '初始化', 'path': path, 'target': target}
     task_logs[task_id] = []
     background_tasks.add_task(run_real_modeling, task_id, path, target)
     return {'task_id': task_id, 'status': 'started'}
@@ -56,6 +57,21 @@ async def get_logs(task_id: str):
 @app.get('/model/status/{task_id}')
 async def get_status(task_id: str):
     return tasks.get(task_id, {'status': 'not_found'})
+
+@app.get('/model/export_code/{task_id}')
+async def export_code(task_id: str):
+    task = tasks.get(task_id)
+    if not task:
+        return JSONResponse(status_code=404, content={'error': 'Task not found'})
+    
+    # 自动获取当前 main.py 所在的目录并拼接路径
+    template_path = os.path.join(os.path.dirname(__file__), 'templates', 'pipeline_template.py')
+    with open(template_path, 'r', encoding='utf-8') as f:
+        template = f.read()
+    
+    code = template.replace('{{target}}', task.get('target', 'target'))
+    code = code.replace('{{data_path}}', task.get('path', 'data.csv'))
+    return {'code': code}
 
 if __name__ == '__main__':
     import uvicorn

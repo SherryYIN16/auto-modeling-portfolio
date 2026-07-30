@@ -47,10 +47,8 @@
             </div>
 
              <!-- 阶段2: 处理 -->
-            <div id="process-view" class="hidden">
-                <div id="model-status-container" class="text-base text-blue-600 mb-2 font-bold h-6 overflow-hidden">
-                    <span id="model-status-text" class="animate-pulse">Initializing...</span>
-                </div>
+             <div id="process-view" class="hidden">
+                <div id="model-status-text" class="text-sm text-gray-600 mb-2 font-medium">Initializing...</div>
                 <div class="w-full bg-gray-200 rounded-full h-3 mb-8"><div id="p-bar" class="bg-blue-600 h-3 rounded-full breathing-bar" style="width: 0%"></div></div>
                  <div class="grid grid-cols-4 gap-4 mb-6">
                      <div class="p-4 border rounded bg-green-50 text-green-700 font-bold text-center">Data Loading</div>
@@ -108,16 +106,13 @@
         
         function pollStatus(taskId) {
             const poll = setInterval(async () => {
-                const res = await fetch('http://127.0.0.1:8001/model/status/' + taskId);
-                const data = await res.json();
-                document.getElementById('p-bar').style.width = data.progress + '%';
-                
-                // 模拟滚动模型名称
-                const models = ["LightGBM", "XGBoost", "RandomForest"];
-                const currentModel = models[Math.floor((Date.now() / 2000) % models.length)];
-                document.getElementById('model-status-text').innerText = data.step + " (" + currentModel + "...)";
-
-                const logRes = await fetch('http://127.0.0.1:8001/model/logs/' + taskId);
+                 const res = await fetch('http://127.0.0.1:8001/model/status/' + taskId);
+                 const data = await res.json();
+                 document.getElementById('p-bar').style.width = data.progress + '%';
+                 if (data.step) {
+                     document.getElementById('model-status-text').innerText = data.step;
+                 }
+                 const logRes = await fetch('http://127.0.0.1:8001/model/logs/' + taskId);
                 const logData = await logRes.json();
                 document.getElementById('log-content').innerHTML = logData.logs.map(l => '<p>'+l+'</p>').join('');
                 if (data.status === 'completed') { 
@@ -192,9 +187,7 @@
                         <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6">
                             <h2 class="text-xl font-bold mb-4">Modeling Pipeline Code</h2>
                             <pre class="bg-gray-100 p-4 rounded overflow-auto h-96 text-sm"><code>${data.code}</code></pre>
-                            <div class="mt-4 flex justify-end gap-2">
-                                <button onclick="copyCode(this)" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">Copy</button>
-                                <button onclick="downloadCode(this)" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Download</button>
+                            <div class="mt-4 flex justify-end">
                                 <button onclick="this.parentElement.parentElement.parentElement.remove()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Close</button>
                             </div>
                         </div>
@@ -207,28 +200,6 @@
                 console.error(err);
                 alert("Error connecting to backend.");
             }
-        }
-
-        function copyCode(btn) {
-            const code = btn.parentElement.parentElement.querySelector('code').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = btn.innerText;
-                btn.innerText = "Copied!";
-                setTimeout(() => btn.innerText = originalText, 2000);
-            });
-        }
-
-        function downloadCode(btn) {
-            const code = btn.parentElement.parentElement.querySelector('code').innerText;
-            const blob = new Blob([code], { type: 'text/x-python' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'modeling_pipeline.py';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
         }
     </script>
     <!-- 在合适的位置调用此函数即可 -->
