@@ -1,42 +1,38 @@
-﻿# Automatic Modeling Workflow
+# Automated Modeling Workbench
 
-An enterprise-grade automatic modeling demonstration platform integrating a FastAPI backend with an interactive web frontend.
+The ultimate tool for data scientists—Automate your entire modeling workflow from data upload to feature importance and code generation with a single interface.
 
-## 🚀 Project Overview
-This project provides an end-to-end demonstration of data uploading, automated feature engineering, model training (powered by AutoGluon), and comprehensive model evaluation & visualization.
+## 🚀 Why this project?
+Tired of repetitive modeling code? **Automated Modeling Workbench** acts as your automated data science assistant. It streamlines data processing, model training, and performance reporting, ensuring your workflows are professional, reproducible, and audit-ready from the very first minute.
 
-## 📸 Workflow Preview
+## ✨ Core Features
+- **Smart Data Handling**: Automatic train/test splitting and flexible target variable selection.
+- **Auto-Modeling Pipeline**: Built-in automated modeling with real-time progress monitoring and log visualization.
+- **Model Interpretability**: Automatic generation of Feature Importance and IV reports.
+- **Code Generation**: Export your successful modeling pipeline as a standard, modular Python template.
 
-### 1. Configuration Page
-The entry point for uploading data and configuring model parameters.
-![Setup Configuration](./initial_page1.png)
-
-### 2. Modeling Progress Page
-Real-time monitoring of system logs and the automated modeling pipeline.
-![Modeling Progress](./modeling_page2.png)
-
-### 3. Model Analysis Report
-Comprehensive visualization of model performance and AI-driven insights.
-![Model Analysis](./report_page3.png)
+## 🛠 Usage Tutorial
+1. **Data Upload**: Configure your dataset upload and split ratio on the main dashboard.
+![Upload Data](initial_page1.png)
+2. **Automated Training**: Monitor the real-time modeling progress, logs, and active algorithms via our intelligent dashboard.
+![Training](modeling_page2.png)
+3. **Model Report**: Visualize your model's performance metrics (AUC, KS, AR) and AI-generated insights.
+![Report](report_page3.png)
+4. **Export Code**: Generate and download your custom modeling pipeline code based on the training results.
+![Export Code](code_page4.png)
 
 ## 📂 Project Structure
-- /backend: FastAPI service for data processing and model orchestration.
-- /workflow-demo: Frontend visualization interface (index.html).
+| Path | Description |
+| :--- | :--- |
+| \backend/\ | Python backend with FastAPI and modeling logic. |
+| \workflow-demo/\ | Frontend static UI (HTML/Tailwind). |
+| \modeling_manager.py\| Orchestration engine for the modeling pipeline. |
+| \model_trainer.py\| Implementation of AutoGluon and model training. |
 
-## 🛠 Tech Stack
-- **Backend**: Python 3.11, FastAPI, AutoGluon, pandas
-- **Frontend**: HTML, Tailwind CSS, JavaScript (Fetch API)
-
-## ⚙️ Setup & Execution
-1. **Backend Service**:
-   `bash
-   python backend/main.py
-   `
-2. **Frontend Service**:
-   `bash
-   python -m http.server 8080
-   `
-   Access at: http://localhost:8080/workflow-demo/index.html
+## 💡 Project Philosophy
+- **Data-First**: Streamlined processing for rapid prototyping.
+- **Transparent Modeling**: Real-time logs and AI-generated interpretations for every step.
+- **Reproducibility**: Export your working model as standardized Python code instantly.
 
 ## 📜 License
 MIT
